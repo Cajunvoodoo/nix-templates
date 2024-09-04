@@ -32,6 +32,7 @@
         pre-commit-hooks-nix.flakeModule
       ];
       perSystem = {
+        config,
         pkgs,
         system,
         self',
@@ -64,7 +65,15 @@
               then [self'.packages.default]
               else []
             );
-          nativeBuildInputs = with hp; with pkgs; [cabal-install];
+          nativeBuildInputs = with hp; with pkgs; [
+            cabal-install
+            haskell-language-server
+            pre-commit
+          ];
+          shellHook = ''
+            ${config.pre-commit.installationScript}
+            echo 1>&2 "Welcome to the development shell!"
+          '';
         };
 
         ########################################################################
