@@ -87,6 +87,18 @@
             hooks = {
               fourmolu.enable = true;
               cabal-fmt.enable = true;
+              cabal-test = {
+                enable = true;
+                name = "cabal-test";
+                description = "Run `cabal test` before committing";
+                files = "\\.l?hs(-boot)?$";
+                entry = let
+                  script = pkgs.writeShellScript "precommit-cabal-test" ''
+                    set -e
+                    ${pkgs.cabal-install}/bin/cabal test all
+                  '';
+                in
+                  builtins.toString script;
 
               alejandra.enable = true;
               check-symlinks.enable = true;
