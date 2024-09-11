@@ -99,6 +99,7 @@
                   '';
                 in
                   builtins.toString script;
+              };
 
               alejandra.enable = true;
               check-symlinks.enable = true;
