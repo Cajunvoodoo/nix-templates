@@ -38,12 +38,25 @@
         self',
         ...
       }: let
+        utils = import ./utils.nix;
+        hsSrc = {dir ? ./.}: with pkgs.lib.fileset; toSource {
+          root = dir;
+          fileset =
+            intersection
+              (gitTracked dir)
+              (unions [
+                (fileFilter (file: file.hasExt "hs") dir)
+                (fileFilter (file: file.hasExt "cabal") dir)
+                (fileFilter (file: file.hasExt "md") dir)
+                (fileFilter (file: file.name == "LICENSE") dir)
+              ]);
+        };
         hp =
           if buildProject
           then
             pkgs.haskellPackages.override {
               overrides = final: prev: {
-                ${pname} = final.callCabal2nix pname ./. {};
+                ${pname} = final.callCabal2nix pname hsSrc {};
               };
             }
           else pkgs.haskellPackages;
