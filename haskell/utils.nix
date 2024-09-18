@@ -11,10 +11,16 @@ rec {
   # Make a specific Haskell derivation build statically.
   # drv: Typically 'prev.callCabal2nix "${pname}" ./. {}', but can also be
   #      'prev.PACKAGE_NAME'
-  # extraLibs: attrSet of (lname, drv) as required by mkCabalConfFlags.
+  #
   # Typical usage goes something like:
   # mkStatic pkgs.haskellPackages.microlens {};
   # mkStatic (prev.callCabal2nix "${pname}" ./. {}) {}
+  #
+  # Options in the attrset include:
+  # extraLibs: attrSet of (lname, drv) as required by mkCabalConfFlags.
+  # doCheck: whether to run tests
+  # doHaddock: whether to build haddock (disabled by default)
+  # jailbreak: whether to check version bounds
   mkStatic = drv: { extraLibs ? {}, doCheck ? true, doHaddock ? false, jailbreak ? false}:
     let
       extraConfFlags = pkgs.lib.concatLists (pkgs.lib.mapAttrsToList (lname: drv': mkCabalConfFlags lname drv') extraLibs);
