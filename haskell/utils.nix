@@ -21,14 +21,14 @@ rec {
   # doCheck: whether to run tests
   # doHaddock: whether to build haddock (disabled by default)
   # jailbreak: whether to check version bounds
-  mkStatic = drv: { extraLibs ? {}, doCheck ? true, doHaddock ? false, jailbreak ? false}:
+  mkStatic = drv: { extraLibs ? {}, doCheck ? true, doHaddock ? false, jailbreak ? false, broken ? false}:
     let
       extraConfFlags = pkgs.lib.concatLists (pkgs.lib.mapAttrsToList (lname: drv': mkCabalConfFlags lname drv') extraLibs);
     in
     pkgs.haskell.lib.overrideCabal
     drv
     (_drv: {
-      inherit doCheck doHaddock jailbreak;
+      inherit doCheck doHaddock jailbreak broken;
 
       isLibrary = false;
       isExecutable = true;
