@@ -38,8 +38,8 @@
         self',
         ...
       }: let
-        utils = import ./utils.nix;
-        hsSrc = {dir ? ./.}: with pkgs.lib.fileset; toSource {
+        utils = import ./utils.nix {inherit pkgs;};
+        hsSrc = dir: with pkgs.lib.fileset; toSource {
           root = dir;
           fileset =
             intersection
@@ -56,7 +56,7 @@
           then
             pkgs.haskellPackages.override {
               overrides = final: prev: {
-                ${pname} = final.callCabal2nix pname hsSrc {};
+                ${pname} = final.callCabal2nix pname (hsSrc ./.) {};
               };
             }
           else pkgs.haskellPackages;
