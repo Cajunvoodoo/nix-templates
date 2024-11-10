@@ -43,6 +43,9 @@ unicode: never
 # Give the programmer more choice on where to insert blank lines
 respectful: true
 
+# Rules for grouping import declarations
+import-grouping: by-scope-then-qualified
+
 # Fixity information for operators
 fixities:
   - infixr 5 :*

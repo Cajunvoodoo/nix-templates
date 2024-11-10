@@ -22,6 +22,11 @@
         description = "Minimal Haskell flake";
       };
 
+      C = {
+        path = ./C;
+        description = "Simple makefile-based C template";
+      };
+
       devshell = {
         path = ./devshell;
         description = "Bare flake outputting only a devshell";
