@@ -12,11 +12,13 @@
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    pre-commit-hooks-nix.url = "github:cachix/pre-commit-hooks.nix";
   };
 
   outputs = inputs @ {
     flake-parts,
     nixpkgs,
+    pre-commit-hooks-nix,
     ...
   }: let
     pname = "PROJ_NAME"; # Your cabal project's name
@@ -24,6 +26,11 @@
   in
     flake-parts.lib.mkFlake {inherit inputs;} {
       systems = ["x86_64-linux" "aarch64-darwin"];
+      imports = [
+        # Ensure the extra-substituters is correctly configured, otherwise the
+        # entire world will be rebuilt :3
+        pre-commit-hooks-nix.flakeModule
+      ];
       perSystem = {
         config,
         pkgs,
@@ -31,7 +38,6 @@
         self',
         ...
       }: let
-        # Contains utilities for making static binaries.
         utils = import ./utils.nix {inherit pkgs;};
         hsSrc = dir: with pkgs.lib.fileset; toSource {
           root = dir;
@@ -77,10 +83,29 @@
             cabal-install
             fourmolu
             haskell-language-server
+            pre-commit
           ];
           shellHook = ''
+            ${config.pre-commit.installationScript}
             echo 1>&2 "Welcome to the development shell!"
           '';
+        };
+
+        ########################################################################
+        ##                          PRE-COMMIT HOOKS                          ##
+        ########################################################################
+        pre-commit = {
+          check.enable = true;
+          settings = {
+            hooks = {
+              fourmolu.enable = true;
+              cabal-fmt.enable = true;
+
+              alejandra.enable = true;
+              check-symlinks.enable = true;
+              trim-trailing-whitespace.enable = true;
+            };
+          };
         };
 
         ########################################################################
