@@ -9,7 +9,7 @@
         path = ./haskell-overkill;
         description = "Batteries-included Haskell flake";
         welcomeText = ''
-          Cajun's Haskell flake template.
+          Cajun's Haskell flake template (Overkill edition).
           Remember to:
           - Accept the cachix flake config
           - Change 'pname' to the name of your cabal project
@@ -23,7 +23,7 @@
         path = ./haskell;
         description = "Batteries-included Haskell flake";
         welcomeText = ''
-          Cajun's Haskell flake template (Overkill edition).
+          Cajun's Haskell flake template.
           Remember to:
           - Change 'pname' to the name of your cabal project
           - Change 'buildProject' to true
