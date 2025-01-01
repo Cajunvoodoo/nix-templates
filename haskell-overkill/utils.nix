@@ -2,11 +2,11 @@
 rec {
   # Common chores for packages, like 'doCheck', 'doHaddock', and 'jailbreak'.
   # By default, disables haddock for a faster build.
-  fixup = drv: { doCheck ? true, doHaddock ? false, jailbreak ? false}:
+  fixup = drv: { doCheck ? true, doHaddock ? false, jailbreak ? false, broken ? false}:
     pkgs.haskell.lib.overrideCabal
       drv
       (_drv: {
-        inherit doCheck doHaddock jailbreak;
+        inherit doCheck doHaddock jailbreak broken;
       });
   # Make a specific Haskell derivation build statically.
   # drv: Typically 'prev.callCabal2nix "${pname}" ./. {}', but can also be
