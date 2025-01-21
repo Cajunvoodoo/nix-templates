@@ -22,8 +22,6 @@
             ccls
             gdb
             pwndbg
-            gnumake
-            cmake
             stdenv.cc
           ];
 
