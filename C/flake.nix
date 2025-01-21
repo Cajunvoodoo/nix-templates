@@ -32,7 +32,7 @@
           shellHook = "";            # The shellhook to run
         };
 
-        packages.default = pkgs.mkDerivation {
+        packages.default = pkgs.stdenv.mkDerivation {
           pname = "PROJECT_NAME";
           version = "0.1.0";
 
