@@ -20,6 +20,7 @@
           name = "Cxx-devshell";
           packages = with pkgs; [    # Executables to include in the devshell
             ccls
+            neocmakelsp
             gdb
             pwndbg
             stdenv.cc
@@ -41,6 +42,7 @@
           nativeBuildInputs = with pkgs; [
             cmake
             gnumake
+            ninja
           ];
 
           buildInputs = with pkgs; [
