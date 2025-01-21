@@ -9,7 +9,7 @@
   outputs = inputs@{ flake-parts, nixpkgs, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
-      perSystem = { pkgs, system, ... }: {
+      perSystem = { pkgs, system, self', ... }: {
         # This sets `pkgs` to a nixpkgs with allowUnfree option set.
         _module.args.pkgs = import nixpkgs {
           inherit system;
@@ -19,9 +19,18 @@
         devShells.default = pkgs.mkShell {
           name = "Cxx-devshell";
           packages = with pkgs; [    # Executables to include in the devshell
+            ccls
+            gdb
+            pwndbg
+            gnumake
+            cmake
             stdenv.cc
           ];
-          inputsFrom = [];           # Include these derivations' dependencies
+
+          inputsFrom = [             # Include these derivations' dependencies
+            self'.packages.default
+          ];
+
           shellHook = "";            # The shellhook to run
         };
 
