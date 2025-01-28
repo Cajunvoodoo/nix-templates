@@ -25,7 +25,7 @@
     buildProject = false; # Include your project (useful for cabal init)
   in
     flake-parts.lib.mkFlake {inherit inputs;} {
-      systems = ["x86_64-linux" "aarch64-darwin"];
+      systems = ["x86_64-linux" "aarch64-linux" "aarch64-darwin"];
       imports = [
         # Ensure the extra-substituters is correctly configured, otherwise the
         # entire world will be rebuilt :3
