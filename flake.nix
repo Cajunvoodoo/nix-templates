@@ -45,6 +45,11 @@
         path = ./devshell;
         description = "Bare flake outputting only a devshell";
       };
+
+      zig = {
+        path = builtins.path {path = ./zig; name = "zig-template"};
+        description = "Zig flake template with ZLS and Pwndbg";
+      };
     };
   };
 }
