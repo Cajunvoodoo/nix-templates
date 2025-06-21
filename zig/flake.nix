@@ -45,6 +45,9 @@
         # Libraries required for runtime
         # These packages will be added to the LD_LIBRARY_PATH
         zigWrapperLibs = attrs.buildInputs or [];
+
+        # Uncomment for ReleaseSmall instead of ReleaseSafe
+        # zigBuildFlags = ["-Doptimize=ReleaseSmall"];
       });
 
       # For bundling with nix bundle for running outside of nix
