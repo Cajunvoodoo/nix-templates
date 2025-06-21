@@ -6,7 +6,7 @@
   outputs = { self }: {
     templates = {
       haskell-overkill = {
-        path = ./haskell-overkill;
+        path = builtins.path {path = ./haskell-overkill; name = "haskell-overkill-template";};
         description = "Batteries-included Haskell flake";
         welcomeText = ''
           Cajun's Haskell flake template (Overkill edition).
@@ -20,7 +20,7 @@
       };
 
       haskell = {
-        path = ./haskell;
+        path = builtins.path {path = ./haskell; name = "haskell-template";};
         description = "Batteries-included Haskell flake";
         welcomeText = ''
           Cajun's Haskell flake template.
@@ -32,22 +32,22 @@
       };
 
       haskell-simple = {
-        path = ./haskell-simple;
+        path = builtins.path {path = ./haskell-simple; name = "haskell-simple-template";};
         description = "Minimal Haskell flake";
       };
 
       C = {
-        path = ./C;
+        path = builtins.path {path =  ./C; name = "C-template";};
         description = "Simple makefile-based C template";
       };
 
       devshell = {
-        path = ./devshell;
+        path = builtins.path {path = ./devshell; name = "devshell-template";};
         description = "Bare flake outputting only a devshell";
       };
 
       zig = {
-        path = builtins.path {path = ./zig; name = "zig-template"};
+        path = builtins.path {path = ./zig; name = "zig-template";};
         description = "Zig flake template with ZLS and Pwndbg";
       };
     };
