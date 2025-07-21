@@ -38,7 +38,7 @@
           pname = "PROJECT_NAME";
           version = "0.1.0";
 
-          src = ./.;
+          src = builtins.path {path = ./.; name = "srcpath";};
 
           nativeBuildInputs = with pkgs; [
             cmake
