@@ -4,9 +4,10 @@
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    pwndbg-src.url = "github:pwndbg/pwndbg";
   };
 
-  outputs = inputs@{ flake-parts, nixpkgs, ... }:
+  outputs = inputs@{ flake-parts, nixpkgs, pwndbg-src, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
       perSystem = { pkgs, system, self', ... }: {
@@ -21,9 +22,9 @@
           packages = with pkgs; [    # Executables to include in the devshell
             ccls
             neocmakelsp
-            gdb
-            pwndbg
             stdenv.cc
+            gdb
+            pwndbg-src.packages.${system}.default
           ];
 
           inputsFrom = [             # Include these derivations' dependencies
